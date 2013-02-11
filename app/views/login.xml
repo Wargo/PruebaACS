@@ -1,0 +1,9 @@
+<Alloy>
+	<Window class="container">
+		<TextField id="textField" />
+		<Button id="button" />
+		<Label id="text" />
+		<LoginButton id="fb" ns="Ti.Facebook" />
+		<ActivityIndicator id="loading" />
+	</Window>
+</Alloy>

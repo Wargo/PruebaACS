@@ -1,0 +1,33 @@
+".container": {
+    backgroundColor: "#CCC",
+    top:20,
+    right:20,
+    left:20,
+    bottom:20,
+    opacity:0
+},
+'#textField': {
+    top:50,
+    backgroundColor:'#FFF',
+    left:20,
+    right:20,
+    height:30,
+    borderColor:'#CCC',
+    borderWidth:1,
+    borderRadius:10,
+    paddingLeft:10
+},
+'#button': {
+    top:90
+},
+'#text': {
+    top:150
+},
+'#fb': {
+	top:180,
+	style:Ti.Facebook.BUTTON_STYLE_WIDE
+},
+'#loading': {
+	top:180,
+	style:Ti.UI.iPhone.ActivityIndicatorStyle.DARK
+}
