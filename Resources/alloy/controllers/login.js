@@ -22,6 +22,7 @@ function Controller() {
         borderWidth: 1,
         borderRadius: 10,
         paddingLeft: 10,
+        autoCapitalization: Ti.UI.TEXT_AUTOCAPITALIZATION_NONE,
         id: "textField"
     }), "TextField", $.__views.login);
     $.__views.login.add($.__views.textField);
@@ -44,15 +45,19 @@ function Controller() {
     $.__views.login.add($.__views.fb);
     $.__views.loading = A$(Ti.UI.createActivityIndicator({
         top: 180,
+        style: Ti.UI.iPhone.ActivityIndicatorStyle.DARK,
         id: "loading"
     }), "ActivityIndicator", $.__views.login);
     $.__views.login.add($.__views.loading);
     exports.destroy = function() {};
     _.extend($, $.__views);
-    var args = arguments[0] || null, Cloud = require("ti.cloud");
+    var args = arguments[0] || null, Cloud = require("ti.cloud"), via_fb = !1;
     $.button.title = L("login");
     $.textField.hintText = L("username");
     $.text.text = L("or");
+    $.textField.on("change", function(e) {
+        $.textField.value = $.textField.value.toLowerCase();
+    });
     Ti.Facebook.appid = "422906664458373";
     $.fb.on("singletap", function() {
         $.fb.hide();
@@ -61,16 +66,8 @@ function Controller() {
     Ti.Facebook.addEventListener("login", function(e) {
         $.loading.hide();
         if (e.success) {
-            Cloud.SocialIntegrations.externalAccountLogin({
-                type: "facebook",
-                token: Ti.Facebook.accessToken
-            }, function(e) {
-                !e.success;
-                alert(e);
-            });
-            $.login.close({
-                opacity: 0
-            });
+            via_fb = !0;
+            $.textField.value = e.data.username;
         } else e.error || !e.cancelled;
     });
     $.button.on("click", function() {
@@ -80,8 +77,23 @@ function Controller() {
                 username: $.textField.value
             }
         }, function(e) {
-            if (e.success) if (e.users.length > 0) alert("ya existe"); else {
-                args.f_callback($.textField.value);
+            if (e.success) if (e.users.length > 0) alert("ya existe"); else if (via_fb) Cloud.SocialIntegrations.externalAccountLogin({
+                type: "facebook",
+                token: Ti.Facebook.accessToken
+            }, function(e2) {
+                var user = e2.users[0];
+                e2.success ? Cloud.Users.update({
+                    username: $.textField.value
+                }, function(e3) {
+                    if (e3.success) {
+                        $.login.close({
+                            opacity: 0
+                        });
+                        args.f_callback($.textField.value, !0);
+                    } else alert(e3);
+                }) : alert(e2);
+            }); else {
+                args.f_callback($.textField.value, !1);
                 $.login.close({
                     opacity: 0
                 });

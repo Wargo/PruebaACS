@@ -1,6 +1,6 @@
 function Controller() {
-    function loginCallback(user) {
-        alert(user);
+    function loginCallback() {
+        alert("a");
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     $model = arguments[0] ? arguments[0].$model : null;
@@ -10,19 +10,42 @@ function Controller() {
         id: "index"
     }), "Window", null);
     $.addTopLevelView($.__views.index);
-    $.__views.label = A$(Ti.UI.createLabel({
-        width: Ti.UI.SIZE,
-        height: Ti.UI.SIZE,
-        color: "#000",
-        text: "Hello, World",
-        id: "label"
-    }), "Label", $.__views.index);
-    $.__views.index.add($.__views.label);
+    $.__views.buttons = A$(Ti.UI.createView({
+        top: 50,
+        opacity: 0,
+        layout: "vertical",
+        id: "buttons"
+    }), "View", $.__views.index);
+    $.__views.index.add($.__views.buttons);
+    $.__views.search = A$(Ti.UI.createButton({
+        top: 20,
+        left: 20,
+        right: 20,
+        id: "search"
+    }), "Button", $.__views.buttons);
+    $.__views.buttons.add($.__views.search);
+    $.__views.random = A$(Ti.UI.createButton({
+        top: 20,
+        left: 20,
+        right: 20,
+        id: "random"
+    }), "Button", $.__views.buttons);
+    $.__views.buttons.add($.__views.random);
+    $.__views.fb_friend = A$(Ti.UI.createButton({
+        top: 20,
+        left: 20,
+        right: 20,
+        id: "fb_friend"
+    }), "Button", $.__views.buttons);
+    $.__views.buttons.add($.__views.fb_friend);
     exports.destroy = function() {};
     _.extend($, $.__views);
     $.index.open();
     Login = require("login");
     Login(loginCallback);
+    $.search.title = L("search_user");
+    $.random.title = L("random_user");
+    $.fb_friend.title = L("fb_user");
     _.extend($, exports);
 }
 

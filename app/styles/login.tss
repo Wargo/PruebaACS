@@ -15,7 +15,8 @@
     borderColor:'#CCC',
     borderWidth:1,
     borderRadius:10,
-    paddingLeft:10
+    paddingLeft:10,
+    autoCapitalization: Ti.UI.TEXT_AUTOCAPITALIZATION_NONE
 },
 '#button': {
     top:90

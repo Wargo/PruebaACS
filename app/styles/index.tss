@@ -5,4 +5,14 @@
 	width: Ti.UI.SIZE,
 	height: Ti.UI.SIZE,
 	color: "#000"
-} 
+},
+"#buttons": {
+	top:50,
+	opacity:0,
+	layout:'vertical'
+},
+'.button': {
+	top:20,
+	left:20,
+	right:20
+}

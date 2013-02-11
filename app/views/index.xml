@@ -1,5 +1,9 @@
 <Alloy>
 	<Window class="container">
-		<Label id="label">Hello, World</Label>
+		<View id="buttons">
+			<Button class="button" id="search" />
+			<Button class="button" id="random" />
+			<Button class="button" id="fb_friend" />
+		</View>
 	</Window>
 </Alloy>

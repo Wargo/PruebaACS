@@ -17,7 +17,11 @@ module.exports = function(f_callback) {
         loginWindow.open({
             opacity: 1
         });
-        function register(username) {
+        function register(username, fb) {
+            if (fb) {
+                f_callback();
+                return;
+            }
             Cloud.Users.create({
                 username: username,
                 password: pass,
@@ -30,7 +34,7 @@ module.exports = function(f_callback) {
                     if (ev.success) {
                         var user = ev.users[0];
                         Ti.App.Properties.setString("username", username);
-                        f_callback(user);
+                        f_callback();
                     } else alert("error login: " + (ev.error && ev.message || JSON.stringify(ev)));
                 }) : alert("error creando usuario: " + (e.error && e.message || JSON.stringify(e)));
             });
