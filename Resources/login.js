@@ -1,7 +1,5 @@
 module.exports = function(f_callback) {
     var pass = "123123", Cloud = require("ti.cloud");
-    Ti.App.Properties.removeProperty("username");
-    Ti.Facebook.logout();
     if (Ti.App.Properties.getString("username", null)) Cloud.Users.login({
         login: Ti.App.Properties.getString("username", null),
         password: pass
@@ -9,7 +7,15 @@ module.exports = function(f_callback) {
         if (e.success) {
             var user = e.users[0];
             f_callback(user);
-        } else alert("error login: " + (e.error && e.message || JSON.stringify(e)));
+        } else Cloud.SocialIntegrations.externalAccountLogin({
+            type: "facebook",
+            token: Ti.Facebook.accessToken
+        }, function(e2) {
+            if (e2.success) {
+                var user = e2.users[0];
+                f_callback(user);
+            } else alert("error login: " + (e2.error && e2.message || JSON.stringify(e2)));
+        });
     }); else {
         var loginWindow = Alloy.createController("login", {
             f_callback: register
@@ -19,6 +25,7 @@ module.exports = function(f_callback) {
         });
         function register(username, fb) {
             if (fb) {
+                Ti.App.Properties.setString("username", username.username);
                 f_callback(username);
                 return;
             }

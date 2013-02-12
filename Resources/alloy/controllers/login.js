@@ -58,7 +58,7 @@ function Controller() {
     $.textField.on("change", function(e) {
         $.textField.value = $.textField.value.toLowerCase();
     });
-    Ti.Facebook.appid = "422906664458373";
+    Ti.Facebook.appid = Alloy.CFG.fb_app_id;
     $.fb.on("singletap", function() {
         $.fb.hide();
         $.loading.show();
@@ -68,7 +68,7 @@ function Controller() {
         if (e.success) {
             via_fb = !0;
             $.textField.value = e.data.username;
-        } else e.error || !e.cancelled;
+        }
     });
     $.button.on("click", function() {
         if (!$.textField.value) return;

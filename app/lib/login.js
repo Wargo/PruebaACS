@@ -5,8 +5,8 @@ module.exports = function(f_callback) {
 	
 	var Cloud = require('ti.cloud');
 
-	Ti.App.Properties.removeProperty('username');
-	Ti.Facebook.logout();
+	//Ti.App.Properties.removeProperty('username');
+	//Ti.Facebook.logout();
 	
 	if (Ti.App.Properties.getString('username', null)) {
 	
@@ -18,7 +18,18 @@ module.exports = function(f_callback) {
 				var user = e.users[0];
 				f_callback(user);
 			} else {
-				alert('error login: ' + ((e.error && e.message) || JSON.stringify(e)));
+				//alert('error login: ' + ((e.error && e.message) || JSON.stringify(e)));
+				Cloud.SocialIntegrations.externalAccountLogin({
+					type:'facebook',
+					token:Ti.Facebook.accessToken
+				}, function(e2) {
+					if (e2.success) {
+						var user = e2.users[0];
+						f_callback(user);
+					} else {
+						alert('error login: ' + ((e2.error && e2.message) || JSON.stringify(e2)));
+					}
+				});
 			}
 		});
 	
@@ -31,6 +42,7 @@ module.exports = function(f_callback) {
 		function register(username, fb) {
 			
 			if (fb) {
+				Ti.App.Properties.setString('username', username.username);
 				f_callback(username);
 				return;
 			}

@@ -1,5 +1,7 @@
 {
-	"global": {}, 
+	"global": {
+		"fb_app_id":"422906664458373"
+	}, 
 	"env:development": {}, 
 	"env:test": {}, 
 	"env:production": {}, 
