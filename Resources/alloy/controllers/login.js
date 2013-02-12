@@ -89,7 +89,7 @@ function Controller() {
                         $.login.close({
                             opacity: 0
                         });
-                        args.f_callback($.textField.value, !0);
+                        args.f_callback(e3.users[0], !0);
                     } else alert(e3);
                 }) : alert(e2);
             }); else {

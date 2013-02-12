@@ -7,17 +7,9 @@ $.search.title = L('search_user');
 $.random.title = L('random_user');
 $.fb_friend.title = L('fb_user');
 
-function loginCallback() {
-	/*
-	Cloud.Users.showMe(function (e) {
-		if (e.success) {
-			var user = e.users[0];
-			alert('Bienvenido ' + user.username);
-		} else {
-			
-		}
-	});
-	*/
+function loginCallback(user) {
+	
+	alert('Bienvenido ' + user.username);
 	$.buttons.animate({opacity:1});
 	
 }

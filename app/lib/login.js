@@ -24,8 +24,6 @@ module.exports = function(f_callback) {
 	
 	} else {
 		
-		// TODO show login buttons and ask for username
-		
 		var loginWindow = Alloy.createController('login', {f_callback: register}).getView();
 
 		loginWindow.open({opacity:1});
@@ -33,7 +31,7 @@ module.exports = function(f_callback) {
 		function register(username, fb) {
 			
 			if (fb) {
-				f_callback();
+				f_callback(username);
 				return;
 			}
 			
@@ -50,7 +48,7 @@ module.exports = function(f_callback) {
 						if (ev.success) {
 							var user = ev.users[0];
 							Ti.App.Properties.setString('username', username);
-							f_callback();
+							f_callback(user);
 						} else {
 							alert('error login: ' + ((ev.error && ev.message) || JSON.stringify(ev)));
 						}

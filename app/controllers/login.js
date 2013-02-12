@@ -61,7 +61,7 @@ $.button.on('click', function() {
 			    			}, function(e3) {
 			    				if (e3.success) {
 			    					$.login.close({opacity:0});
-			    					args.f_callback($.textField.value, true);
+			    					args.f_callback(e3.users[0], true);
 			    				} else {
 			    					alert(e3);
 			    				}
